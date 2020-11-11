@@ -142,8 +142,6 @@ public class TemperatureSeriesAnalysisTest {
         TempSummaryStatistics expResult = new TempSummaryStatistics(seriesAnalysis);
 
         TempSummaryStatistics actualResult = seriesAnalysis.summaryStatistics();
-        System.out.println(actualResult.getClass().getSimpleName());
-        System.out.println(expResult.getClass().getSimpleName());
         assertEquals(expResult.getClass().getSimpleName(), actualResult.getClass().getSimpleName());
     }
 }

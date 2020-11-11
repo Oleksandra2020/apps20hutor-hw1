@@ -1,15 +1,20 @@
 package ua.edu.ucu.tempseries;
-import java.lang.IllegalArgumentException;
 import java.util.InputMismatchException;
 
 public class TemperatureSeriesAnalysis {
 
-    static final int zeroTemperature = 0;
-    static final int lowBound = -273;
+    static final int ZeroTemperature = 0;
+    static final int LowBound = -273;
+    static int TempSize = 5;
 
-    public double[] temperatures;
+    private double[] temperatures;
+
+    public double[] getTemperatures() {
+        return temperatures;
+    }
 
     public TemperatureSeriesAnalysis() {
+        temperatures = new double[TempSize];
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
@@ -21,14 +26,21 @@ public class TemperatureSeriesAnalysis {
     public void checkSeries(double[] tempArr)
     {
         for (double temperature: tempArr)
-            if (temperature < lowBound)
+        {
+            if (temperature < LowBound)
+            {
                 throw new InputMismatchException();
+            }
+        }
     }
 
     public double countSum(double[] temperatureArray)
     {
         double summ = 0;
-        for (double temperature : temperatureArray) summ += temperature;
+        for (double temperature : temperatureArray)
+        {
+            summ += temperature;
+        }
         return summ;
     }
 
@@ -41,7 +53,9 @@ public class TemperatureSeriesAnalysis {
     public void isEmpty()
     {
         if (temperatures.length == 0)
+        {
             throw new IllegalArgumentException();
+        }
     }
 
     public double average() {
@@ -59,7 +73,7 @@ public class TemperatureSeriesAnalysis {
         for (int i = 0; i < tempLen; i++)
         {
             double x = temperatures[i] - mean;
-            devTempArr[i] = Math.pow(x, 2);
+            devTempArr[i] = x*x;
         }
         double devSum = countSum(devTempArr);
         return Math.pow(devSum/tempLen, 0.5);
@@ -71,7 +85,9 @@ public class TemperatureSeriesAnalysis {
         for (double temperature: temperatures)
         {
             if (temperature < curMin)
+            {
                 curMin = temperature;
+            }
         }
         return curMin;
     }
@@ -82,12 +98,17 @@ public class TemperatureSeriesAnalysis {
         for (double temperature: temperatures)
         {
             if (temperature > curMax)
+            {
                 curMax = temperature;
+            }
         }
         return curMax;
     }
 
-    public double findTempClosestToZero() { return findTempClosestToValue(zeroTemperature); }
+    public double findTempClosestToZero()
+    {
+        return findTempClosestToValue(ZeroTemperature);
+    }
 
     public double findTempClosestToValue(double tempValue) {
         isEmpty();
@@ -99,7 +120,9 @@ public class TemperatureSeriesAnalysis {
         {
             newDiff = Math.abs(tempValue - temperature);
             if (newDiff == minDiff)
+            {
                 closestValues[1] = temperature;
+            }
             else if (newDiff < minDiff)
             {
                 closestValues[0] = temperature;
@@ -115,11 +138,13 @@ public class TemperatureSeriesAnalysis {
         double[] lessVals = new double[temperatures.length];
         int i = 0;
         for (double temperature: temperatures)
+        {
             if (temperature < tempValue)
             {
                 lessVals[i] = temperature;
                 i++;
             }
+        }
         return lessVals;
     }
 
@@ -128,11 +153,13 @@ public class TemperatureSeriesAnalysis {
         double[] greaterVals = new double[temperatures.length];
         int i = 0;
         for (double temperature: temperatures)
+        {
             if (temperature > tempValue)
             {
                 greaterVals[i] = temperature;
                 i++;
             }
+        }
         return greaterVals;
     }
 
@@ -140,7 +167,8 @@ public class TemperatureSeriesAnalysis {
     public TempSummaryStatistics summaryStatistics()
     {
         isEmpty();
-        return new TempSummaryStatistics(new TemperatureSeriesAnalysis(temperatures));
+        return new TempSummaryStatistics(new
+                TemperatureSeriesAnalysis(temperatures));
     }
 
     public int addTemps(double... temps) {
@@ -151,8 +179,14 @@ public class TemperatureSeriesAnalysis {
         if (newLen > tempLen)
         {
             double[] newTemps = new double[newLen*2];
-            for (int i = 0; i < tempLen; i++) {newTemps[i] = temperatures[i];}
-            for (int i = 0; i < tempsLen; i++) {newTemps[tempLen+i] = temps[i];}
+            for (int i = 0; i < tempLen; i++)
+            {
+                newTemps[i] = temperatures[i];
+            }
+            for (int i = 0; i < tempsLen; i++)
+            {
+                newTemps[tempLen+i] = temps[i];
+            }
             temperatures = newTemps;
         }
         return (int) Math.floor(countSum(temperatures));
