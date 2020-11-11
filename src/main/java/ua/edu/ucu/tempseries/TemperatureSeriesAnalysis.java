@@ -5,12 +5,18 @@ public class TemperatureSeriesAnalysis {
 
     static final int ZERO = 0;
     static final int LOW = -273;
-    static private int START_SIZE = 5;
+    private static final int START_SIZE = 5;
 
     private double[] temperatures;
 
     public TemperatureSeriesAnalysis() {
         temperatures = new double[START_SIZE];
+    }
+
+    public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+        checkSeries(temperatureSeries);
+        temperatures = temperatureSeries;
+        isEmpty();
     }
 
     public double[] getTemperatures() {
@@ -20,13 +26,6 @@ public class TemperatureSeriesAnalysis {
     public int getStartSize()
     {
         return START_SIZE;
-    }
-
-
-    public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        checkSeries(temperatureSeries);
-        temperatures = temperatureSeries;
-        isEmpty();
     }
 
     public void checkSeries(double[] tempArr)
