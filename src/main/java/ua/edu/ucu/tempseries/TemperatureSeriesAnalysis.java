@@ -3,19 +3,25 @@ import java.util.InputMismatchException;
 
 public class TemperatureSeriesAnalysis {
 
-    static final int ZeroTemperature = 0;
-    static final int LowBound = -273;
-    static int TempSize = 5;
+    static final int ZERO = 0;
+    static final int LOW = -273;
+    static private int START_SIZE = 5;
 
     private double[] temperatures;
+
+    public TemperatureSeriesAnalysis() {
+        temperatures = new double[START_SIZE];
+    }
 
     public double[] getTemperatures() {
         return temperatures;
     }
 
-    public TemperatureSeriesAnalysis() {
-        temperatures = new double[TempSize];
+    public int getStartSize()
+    {
+        return START_SIZE;
     }
+
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
         checkSeries(temperatureSeries);
@@ -27,7 +33,7 @@ public class TemperatureSeriesAnalysis {
     {
         for (double temperature: tempArr)
         {
-            if (temperature < LowBound)
+            if (temperature < LOW)
             {
                 throw new InputMismatchException();
             }
@@ -107,7 +113,7 @@ public class TemperatureSeriesAnalysis {
 
     public double findTempClosestToZero()
     {
-        return findTempClosestToValue(ZeroTemperature);
+        return findTempClosestToValue(ZERO);
     }
 
     public double findTempClosestToValue(double tempValue) {
